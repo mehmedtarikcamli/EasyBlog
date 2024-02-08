@@ -37,11 +37,16 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+	name: "areas",
+	pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+	);
+
+app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-using (var scope= app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
 	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
